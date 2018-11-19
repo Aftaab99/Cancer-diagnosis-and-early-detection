@@ -6,8 +6,8 @@ from torchvision import transforms
 from flask import Flask, request, render_template, send_from_directory
 import pickle
 import pandas as pd
-from SkinCancer.Model import Net as SkinCancerModel
-from ColorectalCancer.Model import Net as ColorectalModel
+from src.SkinCancer.Model import Net as SkinCancerModel
+from src.ColorectalCancer.Model import Net as ColorectalModel
 import json
 from keras.models import load_model
 
@@ -99,10 +99,6 @@ def get_breast_cancer_prediction():
 
 		return render_template('breast_cancer_diagnosis.html', img_name=img_n, width=400, height=400)
 
-@app.route('/render_result_breast_cancer_diagnosis')
-def render_result_breast_cancer_diagnosis():
-	pass
-
 
 @app.route('/get_skin_cancer_prediction')
 def get_skin_cancer_prediction():
@@ -145,7 +141,6 @@ def get_colorectal_cancer_prediction():
 @app.route('/get_cervical_cancer_prediction', methods=['POST', 'GET'])
 def get_cervical_cancer_prediction():
 	data = request.form
-	print('OOOOOOOOO')
 	age = data['age']
 	no_of_partners = data['no_of_partners']
 	first_sexual_intercourse = data['first_sexual_intercourse']
