@@ -32,15 +32,17 @@
         proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
     <p class="ui mt-4"><strong>Upload Your Image</strong></p>
-    <form>
+    <form action ="{{ url_for('get_test_drug') }}" enctype="multipart/form-data" method="post">
         <div class="ui1">
             <label class="btn btn-default btn-file">Browse<strong>...</strong>
-                <input type="file" name="Image" accept=".csv" style="display: none;"></label>
+                <input type="file" name="drug_file" accept=".csv" style="display: none;"></label>
+            <label class="btn btn-default btn-file">Submit<strong>...</strong>
+                <input type="submit" style="display: none;"></label>
         </div>
     </form>
     <p class="mt-3">*Note: After Uploading the file you will get the predicted output</p>
     <p class="ui"><strong>Prediction</strong></p>
-    <div></div>
+    <div>{{pred}}</div>
 </div>
 
 <!-- Footer -->

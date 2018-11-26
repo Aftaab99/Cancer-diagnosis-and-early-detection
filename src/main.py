@@ -1,22 +1,19 @@
 from PIL import Image, ImageDraw
-from BreastCancerDiagnosis.Model import Net as BreastCancerModel
+from src.BreastCancerDiagnosis.Model import Net as BreastCancerModel
 import numpy as np
+from torch import Tensor
 from torch import load
 from torchvision import transforms
 from flask import Flask, request, render_template, send_from_directory
 import pickle
+from werkzeug.utils import secure_filename
 import pandas as pd
-from SkinCancer.Model import Net as SkinCancerModel
-from ColorectalCancer.Model import Net as ColorectalModel
+from src.SkinCancer.Model import Net as SkinCancerModel
+from src.ColorectalCancer.Model import Net as ColorectalModel
 import json
 from keras.models import load_model
 
 app = Flask(__name__)
-
-
-@app.route('/breast_cancer_diagnosis')
-def breast_cancer_diagnosis():
-	return render_template('breast_cancer_diagnosis.html')
 
 
 @app.route('/breast_cancer_prognosis')
@@ -36,30 +33,34 @@ def cervical_cancer():
 
 @app.route('/colorectal_cancer')
 def colorectal_cancer():
-	return render_template('colorectal_cancer.html')
+	return render_template('colorectal_cancer.html', pred="Upload a image to get a diagnosis")
 
 
 @app.route('/skin_cancer')
 def skin_cancer():
-	return render_template('skin_cancer.html')
+	return render_template('skin_cancer.html', pred='Upload tumor image to predict')
 
 
 @app.route('/symptoms')
 def symptoms():
-	return render_template('symptoms.htmk')
+	return render_template('symptoms.html')
+
 
 @app.route('/')
 def index():
 	return render_template('index.html')
 
+
 # Gets the image
-@app.route('/get_breast_cancer_prediction', methods=['POST'])
-def get_breast_cancer_prediction():
-	img = request.files.get('breast_cancer_image')
-	if img is None:
+@app.route('/breast_cancer_diagnosis', methods=['POST', 'GET'])
+def breast_cancer_diagnosis():
+	if request.method == 'GET':
+		return render_template('breast_cancer_diagnosis.html', width=0, height=0)
+	imgf = request.files.get('breast_cancer_image')
+	if imgf is None:
 		return "Error. Upload an image"
 	else:
-		img = Image.open(img.stream)
+		img = Image.open(imgf.stream)
 		x, y = img.size
 		x_new = x
 		y_new = y
@@ -94,41 +95,52 @@ def get_breast_cancer_prediction():
 				print('Image size={}, {}'.format(img_crop.shape, pred))
 				if pred == 'Malignant':
 					draw_img.rectangle(((i, j), (i + 32, j + 32)), outline='red')
-		img_n='temp.jpg'
-		img.save('static/'+img_n, 'JPEG')
+		img_n = imgf.filename
+		img.save('static/' + img_n, 'JPEG')
 
 		return render_template('breast_cancer_diagnosis.html', img_name=img_n, width=400, height=400)
 
-@app.route('/render_result_breast_cancer_diagnosis')
-def render_result_breast_cancer_diagnosis():
-	pass
 
-
-@app.route('/get_skin_cancer_prediction')
+@app.route('/get_skin_cancer_prediction', methods=['GET', 'POST'])
 def get_skin_cancer_prediction():
 	img = request.files.get('skin_cancer_image')
 	if img == None:
 		return 'Error occured. Upload an image'
+	sex = request.form.get('Sex')
+	age = request.form.get('Age')
+
+	sex_id = '0'
+	print("{}, {}".format(sex, age))
+	if sex.lower() == 'male':
+		print('True...')
+		sex_id = '1'
+
+	sex = sex_id
+	sex = int(sex)
+	print(sex)
+	age = int(age)
+	img = Image.open(img.stream).convert('L').resize([128, 128])
 	img_array = np.array(img)
 	model = SkinCancerModel()
-	model.load_state_dict(load('SkinCancer/model_skin_cancer.pt'))
-	transform = transforms.Compose([transforms.ToPILImage(),
-									transforms.ToTensor(),
-									transforms.Normalize(mean=[0], std=[1])])
-	img_tensor = transform(img_array).view(1, 3, 300, 300)
-	y_pred = model.forward(img_tensor).detach().numpy()
+	model.load_state_dict(load('SkinCancer/model_skin_cancer_epoch3.pt'))
+
+	img_tensor = Tensor(img_array).view(1, 1, 128, 128)
+	y_pred = model.forward(img_tensor, Tensor([sex]).float(), Tensor([age])).detach().numpy()
 	y_pred = np.round(y_pred)
+	pred = 'Upload to get a prediction'
 	if y_pred == 1:
-		res = {'prediction': 1}
-		return json.dumps(res)
+		pred = "You've a malignant melanoma tumor"
+	else:
+		pred = "Your tumor is benign"
+	return render_template('skin_cancer.html', pred=pred)
 
 
-@app.route('/get_colorectal_cancer_prediction')
+@app.route('/get_colorectal_cancer_prediction', methods=['POST'])
 def get_colorectal_cancer_prediction():
 	img = request.files.get('colorectal_cancer_image')
-	if img == None:
+	if img is None:
 		return 'Error occured. Upload an image'
-	img_array = np.array(img)
+	img_array = np.array(img.stream)
 	model = ColorectalModel()
 	model.load_state_dict(load('ColorectalCancer/ColorectalCancer.pt'))
 	transform = transforms.Compose([transforms.ToPILImage(),
@@ -137,9 +149,10 @@ def get_colorectal_cancer_prediction():
 	img_tensor = transform(img_array).view(1, 3, 150, 150)
 	y_pred = model.forward(img_tensor).detach().numpy()
 	y_pred = np.round(y_pred)
+	pred = 'Benign'
 	if y_pred == 1:
-		res = {'prediction': 1}
-		return json.dumps(res)
+		pred = 'Malignant tumors present'
+	render_template(render_template('colorectal_cancer.html'), pred=pred)
 
 
 @app.route('/get_cervical_cancer_prediction', methods=['POST', 'GET'])
@@ -171,22 +184,22 @@ def get_cervical_cancer_prediction():
 	pred_s = model_s.predict(x)
 	pred_c = model_c.predict(x)
 	pred_b = model_b.predict(x)
-	label1='Risk of cervical cancer'
+	label1 = 'Risk of cervical cancer'
 	label2 = 'Risk of cervical cancer'
 	label3 = 'Risk of cervical cancer'
 	label4 = 'Risk of cervical cancer'
-	if pred_h==0:
-		label1='No risk'
-	if pred_s==0:
-		label2='No risk'
-	if pred_c==0:
-		label3='No risk'
-	if pred_b==0:
-		label4='No risk'
+	if pred_h == 0:
+		label1 = 'No risk'
+	if pred_s == 0:
+		label2 = 'No risk'
+	if pred_c == 0:
+		label3 = 'No risk'
+	if pred_b == 0:
+		label4 = 'No risk'
 
-	pred = '<h3>Hinselmann: %s</h3><h3>Schiller: %s</h3><h3>Citology: %s</h3><h3>Biopsy: %s</h3>' % (label1, label2, label3, label4)
-	print(pred)
-	return pred
+	pred = '<h3>Hinselmann: %s</h3><h3>Schiller: %s</h3><h3>Citology: %s</h3><h3>Biopsy: %s</h3>' % (
+	label1, label2, label3, label4)
+	return render_template('colorectal_cancer.html', pred=pred)
 
 
 @app.route('/get_breast_cancer_prognosis', methods=['POST'])
@@ -208,17 +221,21 @@ def get_breast_cancer_prognosis():
 	model = load_model('BreastCancerPrognosis/breast_cancer_prognosis.h5')
 	pred = model.predict(x)
 	pred1 = np.round(pred)
-	pos='<h3>Prediction: Your tumor is probably on its way to become malignant</h3>'
-	neg='<h3>Prediction: Your tumor will probably stay benign</h3>'
-	if pred1==1:
+	pos = '<h3>Prediction: Your tumor is probably on its way to become malignant</h3>'
+	neg = '<h3>Prediction: Your tumor will probably stay benign</h3>'
+	if pred1 == 1:
 		return render_template('breast_cancer_prognosis.html', pred=pos)
-	if pred1==0:
+	if pred1 == 0:
 		return render_template('breast_cancer_prognosis.html', pred=neg)
 
 
-@app.route('/test_drug')
+@app.route('/test_drug', methods=['GET'])
 def test_drug():
-	file = request.file.get('drug_file')
+	return render_template('phd.html', pred='Upload a drug screening file for a prediction')
+
+@app.route('/get_test_drug', methods=['POST'])
+def get_test_drug():
+	file = request.files.get('drug_file')
 	if file is None:
 		return 'No file'
 	df = pd.read_csv(file)
@@ -233,9 +250,29 @@ def test_drug():
 
 	pred_bin = model_binary.predict(x)
 	pred_multiclass = np.argmax(model_multiclass.predict(x))
+	label_dict = {0: 'Cyclin-dependent kinase 2', 1: 'Epidermal growth factor receptor erbB1',
+				  2: 'Glycogen synthase kinase-3 beta', 3: 'Hepatocyte growth factor receptor',
+				  4: 'MAP kinase p38 alpha',
+				  5: 'Tyrosine-protein kinase LCK', 6: 'Tyrosine-protein kinase SRC',
+				  7: 'Vascular endothelial growth factor receptor 2'}
 
-	return json.dumps({'Binary confidence': '%.3f' % pred_bin * 100, 'Multiclass': pred_multiclass})
+	pred = 'The given kinase can be used as an inhibitor(Confidence score = {}'.format(float(pred_bin)) + '\n' + \
+		   'It is probably a {}'.format(label_dict[pred_multiclass])
+	return render_template('phd.html', pred=pred)
 
+
+@app.route('/login', methods=['GET'])
+def login():
+	return render_template('login.html', error_res='')
+
+
+@app.route('/login', methods=['POST'])
+def complete_login():
+	email = request.files.get('Email')
+	password = request.files.get('password')
+	if email is None or password is None or len(password) < 8:
+		return render_template('login.html', error_res='Invalid or empty username/password')
+	return 'Not designed yet'
 
 if __name__ == '__main__':
 	app.run()
