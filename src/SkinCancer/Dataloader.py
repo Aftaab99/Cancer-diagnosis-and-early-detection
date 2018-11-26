@@ -30,7 +30,11 @@ class TrainDataset(Dataset):
 	def __getitem__(self, index):
 		file_path = train[index]
 		img = Image.open(file_path).convert('L').resize([128, 128])
+<<<<<<< HEAD
 		img_t = self.transform(Tensor(np.array(img)).view(1, 128, 128))
+=======
+		img_t = self.tranform(Tensor(np.array(img)).view(1, 128, 128))
+>>>>>>> ab3dfe2bb15aa425c976b7e7e15a84ad891c63e2
 		file_name = ntpath.basename(ntpath.splitext(train[index])[0])
 		y = 0
 		age = -1

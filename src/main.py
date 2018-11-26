@@ -158,7 +158,6 @@ def get_colorectal_cancer_prediction():
 @app.route('/get_cervical_cancer_prediction', methods=['POST', 'GET'])
 def get_cervical_cancer_prediction():
 	data = request.form
-	print('OOOOOOOOO')
 	age = data['age']
 	no_of_partners = data['no_of_partners']
 	first_sexual_intercourse = data['first_sexual_intercourse']
