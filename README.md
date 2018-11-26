@@ -7,5 +7,5 @@ A flask website for early cancer detection and diagnosis.
 	python main.py
 
 ### Contributers
-ssshreyans26
-vinamraRathi
+1. [@ShreyansSontalia]( https://github.com/ssshreyans26 )
+2. [@VinamraRathi]( https://github.com/vinamraRathi)
