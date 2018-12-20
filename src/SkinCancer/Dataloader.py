@@ -1,4 +1,3 @@
-from torchvision import transforms
 from torch.utils.data import Dataset
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -23,23 +22,17 @@ class TrainDataset(Dataset):
 
 	def __init__(self):
 		super().__init__()
-		self.transform = transforms.Compose([transforms.ToPILImage(),
-											transforms.ToTensor(),
-											transforms.Normalize(mean=[0], std=[1])])
 
 	def __getitem__(self, index):
 		file_path = train[index]
-		img = Image.open(file_path).convert('L').resize([128, 128])
-<<<<<<< HEAD
-		img_t = self.transform(Tensor(np.array(img)).view(1, 128, 128))
-=======
-		img_t = self.tranform(Tensor(np.array(img)).view(1, 128, 128))
->>>>>>> ab3dfe2bb15aa425c976b7e7e15a84ad891c63e2
+		img = Image.open(file_path).resize([128, 128])
+		img = Tensor(img).view(3, 128, 128)
+
 		file_name = ntpath.basename(ntpath.splitext(train[index])[0])
 		y = 0
 		age = -1
 		sex = -1
-		if melanoma_dict.get(file_name) != None:
+		if melanoma_dict.get(file_name) is not None:
 			y = melanoma_dict.get(file_name)['target']
 			g = melanoma_dict.get(file_name)['gender']
 			if g == 'female':
@@ -53,7 +46,7 @@ class TrainDataset(Dataset):
 			if type(age) == str:
 				age = -80
 
-		return [img_t, y, sex, age]
+		return [img, y, sex, age]
 
 	def __len__(self):
 		return len(train)
@@ -63,19 +56,16 @@ class TestDataset(Dataset):
 
 	def __init__(self):
 		super().__init__()
-		self.tranform = transforms.Compose([transforms.ToPILImage(),
-											transforms.ToTensor(),
-											transforms.Normalize(mean=[0], std=[1])])
 
 	def __getitem__(self, index):
 		file_path = test[index]
-		img = Image.open(file_path).convert('L').resize([128, 128])
-		img_t = self.tranform(Tensor(np.array(img)).view(1, 128, 128))
+		img = Image.open(file_path).resize([128, 128])
+		img = Tensor(img).view(3, 128, 128)
 		file_name = ntpath.basename(ntpath.splitext(test[index])[0])
-		y = 0;
-		age = -1;
+		y = 0
+		age = -1
 		sex = -1
-		if melanoma_dict.get(file_name) != None:
+		if melanoma_dict.get(file_name) is not None:
 			y = melanoma_dict.get(file_name)['target']
 			g = melanoma_dict.get(file_name)['gender']
 			if g == 'female':
@@ -89,7 +79,7 @@ class TestDataset(Dataset):
 			if type(age) == str:
 				age = -80
 
-		return [img_t, y, sex, age]
+		return [img, y, sex, age]
 
 	def __len__(self):
 		return len(test)

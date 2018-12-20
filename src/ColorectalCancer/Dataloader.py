@@ -1,6 +1,6 @@
 from PIL import Image
+from torch import Tensor
 import numpy as np
-from torchvision import transforms
 from torch.utils.data import Dataset
 from sklearn.model_selection import train_test_split
 from glob import glob, fnmatch
@@ -16,14 +16,12 @@ print('Positives=%d' % len(positives))
 
 train, test = train_test_split(data, test_size=0.2)
 
+
 class TrainDataset(Dataset):
 
 	def __init__(self):
 		super().__init__()
 		self.train = train
-		self.transform = transforms.Compose([transforms.ToPILImage(),
-											 transforms.Normalize([0, 0, 0], [1, 1, 1]),
-											 transforms.ToTensor()])
 
 	def __getitem__(self, index):
 		img = Image.open(train[index], 'r').convert('RGB')
@@ -34,7 +32,8 @@ class TrainDataset(Dataset):
 			y = 1
 		else:
 			y = 0
-		return (img, y)
+		img = Tensor(img).view(3, 150, 150)
+		return img, y
 
 	def __len__(self):
 		return len(train)
@@ -45,9 +44,6 @@ class TestDataset(Dataset):
 	def __init__(self):
 		super().__init__()
 		self.test = test
-		self.transform = transforms.Compose([transforms.ToPILImage(),
-											 transforms.Normalize([0, 0, 0], [1, 1, 1]),
-											 transforms.ToTensor()])
 
 	def __getitem__(self, index):
 		img = Image.open(train[index], 'r').convert('RGB')
@@ -58,7 +54,8 @@ class TestDataset(Dataset):
 			y = 1
 		else:
 			y = 0
-		return (img, y)
+		img = Tensor(img).view(3, 150, 150)
+		return img, y
 
 	def __len__(self):
 		return len(test)

@@ -1,9 +1,9 @@
 from sklearn.metrics import f1_score, accuracy_score
 from torch import load
-from BreastCancerDiagnosis.Model import Net
+from src.BreastCancerDiagnosis.Model import Net
 import numpy as np
 from torch.utils.data import DataLoader
-from BreastCancerDiagnosis.Dataloader import TestDataset
+from src.BreastCancerDiagnosis.Dataloader import TestDataset
 
 model = Net()
 model.load_state_dict(load('breast_cancer_diagnosis.pt'))
@@ -16,6 +16,8 @@ steps = 0
 acc = 0
 for i, data in enumerate(test_generator):
 	test_x, test_y = data
+	test_y = test_y.view(-1, 1)
+
 	pred = model.forward(test_x)
 	pred = np.round(pred.detach().numpy())
 	test_y = np.array(test_y)
