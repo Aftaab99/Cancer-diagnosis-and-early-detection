@@ -1,5 +1,5 @@
-from ColorectalCancer.Dataloader import TestDataset
-from ColorectalCancer.Model import Net
+from src.ColorectalCancer.Dataloader import TestDataset
+from src.ColorectalCancer.Model import Net
 from sklearn.metrics import accuracy_score, f1_score
 from torch.utils.data import DataLoader
 import numpy as np

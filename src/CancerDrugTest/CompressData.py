@@ -9,7 +9,7 @@ Y = data.iloc[:, -1]
 X = data.iloc[:, 0:6117]
 del data
 pca_comp = PCA(n_components=80, svd_solver='full')
-X=pca_comp.fit_transform(X, Y)
+X = pca_comp.fit_transform(X, Y)
 print('PCA variance=%.3f' % pca_comp.explained_variance_ratio_[0])
 scaler = MinMaxScaler()
 X = scaler.fit_transform(X)

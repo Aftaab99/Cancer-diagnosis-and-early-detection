@@ -7,7 +7,6 @@ app = Flask(__name__)
 def breast_cancer_diagnosis():
 	if request.method == 'GET':
 		return render_template('breast-cancer-diagnosis.html')
-
 	else:
 		pass
 

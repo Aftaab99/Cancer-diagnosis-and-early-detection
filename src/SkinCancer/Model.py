@@ -32,15 +32,12 @@ class Net(nn.Module):
 		x = sigmoid(self.fc2(x))
 		a = a.view(-1, 1)
 		g = g.view(-1, 1)
-<<<<<<< HEAD
 		print(x.size())
 		print(a.size())
 		print(g.size())
 		x = torch.cat((x, g, a), 1)
 
-=======
 		x = torch.cat((x, g, a), 1)
->>>>>>> ab3dfe2bb15aa425c976b7e7e15a84ad891c63e2
 		x = self.meta_fc3(x)
 		x = leaky_relu(x)
 		x = self.out(x)

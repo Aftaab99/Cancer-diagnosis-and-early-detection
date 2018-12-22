@@ -1,8 +1,6 @@
 import pandas as pd
 import numpy as np
 import os
-from sklearn.preprocessing import Imputer
-from imblearn.under_sampling import InstanceHardnessThreshold
 
 data = pd.read_csv('Dataset/risk_factors_cervical_cancer.csv')
 data.describe()

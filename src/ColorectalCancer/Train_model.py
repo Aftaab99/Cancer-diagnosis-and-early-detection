@@ -1,7 +1,7 @@
-from ColorectalCancer.Model import Net
+from src.ColorectalCancer.Model import Net
 import numpy as np
 from torch.autograd import Variable
-from ColorectalCancer.Dataloader import TrainDataset, TestDataset
+from src.ColorectalCancer.Dataloader import TrainDataset
 from torch.optim import Adam
 import torch.nn as nn
 from torch import Tensor

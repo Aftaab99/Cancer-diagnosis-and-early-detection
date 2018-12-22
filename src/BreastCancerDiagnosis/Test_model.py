@@ -30,4 +30,4 @@ for i, data in enumerate(test_generator):
 
 print('Average f1 score across batches={}'.format(f1 / steps))
 print('Average accuracy={}'.format(acc / steps))
-# F1 score=0.73, accuracy=86.4%
+# F1 score=0.71, accuracy=84.1%

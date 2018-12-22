@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from scipy import sparse
 import h5py
-from glob import glob, fnmatch
+from glob import glob
 
 
 def load_as_dataframe(path):
@@ -17,7 +17,7 @@ def load_as_dataframe(path):
 		tt = sparse.csr_matrix((hf["tt"]["data"], hf["tt"]["indices"], hf["tt"]["indptr"]),
 							   shape=[len(hf["tt"]["indptr"]) - 1, 2039])
 		features = sparse.hstack([ap, mg, tt]).toarray()
-		labels = 9*np.ones(shape=(features.shape[0], 1))
+		labels = 9 * np.ones(shape=(features.shape[0], 1))
 		data = np.concatenate((features, labels), axis=1)[1:1501, :]
 		del features, labels
 		return pd.DataFrame(data)
@@ -43,9 +43,12 @@ def load_as_dataframe(path):
 	hf = h5py.File(path, 'r')
 	ids = hf["chembl_id"].value  # the name of each molecules
 	print(path)
-	ap = sparse.csr_matrix((hf["ap"]["data"], hf["ap"]["indices"], hf["ap"]["indptr"]), shape=[len(hf["ap"]["indptr"]) - 1, 2039])
-	mg = sparse.csr_matrix((hf["mg"]["data"], hf["mg"]["indices"], hf["mg"]["indptr"]),shape=[len(hf["mg"]["indptr"]) - 1, 2039])
-	tt = sparse.csr_matrix((hf["tt"]["data"], hf["tt"]["indices"], hf["tt"]["indptr"]),shape=[len(hf["tt"]["indptr"]) - 1, 2039])
+	ap = sparse.csr_matrix((hf["ap"]["data"], hf["ap"]["indices"], hf["ap"]["indptr"]),
+						   shape=[len(hf["ap"]["indptr"]) - 1, 2039])
+	mg = sparse.csr_matrix((hf["mg"]["data"], hf["mg"]["indices"], hf["mg"]["indptr"]),
+						   shape=[len(hf["mg"]["indptr"]) - 1, 2039])
+	tt = sparse.csr_matrix((hf["tt"]["data"], hf["tt"]["indices"], hf["tt"]["indptr"]),
+						   shape=[len(hf["tt"]["indptr"]) - 1, 2039])
 	features = sparse.hstack([ap, mg, tt]).toarray()
 	# the samples' features, each row is a sample, and each sample has 3*2039 features
 	labels = (class_label * hf["label"].value).reshape(-1, 1)
