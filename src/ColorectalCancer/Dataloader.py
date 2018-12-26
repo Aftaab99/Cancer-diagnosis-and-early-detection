@@ -14,7 +14,7 @@ class5 = fnmatch.filter(data, '/home/aftaab/MylanDatasets/colorectal-histology-m
 class6 = fnmatch.filter(data, '/home/aftaab/MylanDatasets/colorectal-histology-mnist/Patches/06_MUCOSA/*.tif')
 class7 = fnmatch.filter(data, '/home/aftaab/MylanDatasets/colorectal-histology-mnist/Patches/07_ADIPOSE/*.tif')
 class0 = fnmatch.filter(data, '/home/aftaab/MylanDatasets/colorectal-histology-mnist/Patches/08_EMPTY/*.tif')
-train, test = train_test_split(data, test_size=0.05, shuffle=True)
+train, test = train_test_split(data, test_size=0.1, shuffle=True)
 
 
 class TrainDataset(Dataset):
@@ -24,9 +24,9 @@ class TrainDataset(Dataset):
 		self.train = train
 
 	def __getitem__(self, index):
-		img = Image.open(train[index]).convert('RGB')
+		img = Image.open(train[index]).convert('L')
 		img = img.resize([150, 150])
-		img = np.array(img).reshape(3, 150, 150)
+		img = np.array(img).reshape(1, 150, 150)
 		if train[index] in class1:
 			y = 1
 		elif train[index] in class2:
@@ -44,7 +44,7 @@ class TrainDataset(Dataset):
 		else:
 			y = 0
 
-		img = Tensor(img/255.0).view(3, 150, 150)
+		img = Tensor(img/255.0).view(1, 150, 150)
 		return img, y
 
 	def __len__(self):
@@ -58,9 +58,9 @@ class TestDataset(Dataset):
 		self.test = test
 
 	def __getitem__(self, index):
-		img = Image.open(train[index]).convert('RGB')
+		img = Image.open(train[index]).convert('L')
 		img = img.resize([150, 150])
-		img = np.array(img).reshape(3, 150, 150)
+		img = np.array(img).reshape(1, 150, 150)
 		if test[index] in class1:
 			y = 1
 		elif test[index] in class2:
@@ -78,7 +78,7 @@ class TestDataset(Dataset):
 		else:
 			y = 0
 
-		img = Tensor(img/255.0).view(3, 150, 150)
+		img = Tensor(img/255.0).view(1, 150, 150)
 		return img, y
 
 	def __len__(self):

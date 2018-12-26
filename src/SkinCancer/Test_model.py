@@ -2,11 +2,11 @@ from src.SkinCancer.Dataloader import TestDataset
 from src.SkinCancer.Model import Net
 from torch import load
 from torch.utils.data import DataLoader
-from sklearn.metrics import accuracy_score, f1_score
 import numpy as np
+from sklearn.metrics import accuracy_score
 
 model = Net()
-model.load_state_dict(load('model_skin_cancer_epoch3.pt'))
+model.load_state_dict(load('model_skin_cancer_epoch40.pt'))
 model.eval()
 test_dataset = TestDataset()
 test_loader = DataLoader(test_dataset, batch_size=32, shuffle=True)
@@ -23,9 +23,8 @@ for _, data in enumerate(test_loader):
 	sex = sex.float()
 	age = age.float()
 	y_pred = model.forward(test_x, sex, age)
-	y_pred = y_pred.detach().numpy() >= 0.5
+	y_pred = np.round(y_pred.detach().numpy())
 	acc += accuracy_score(test_y.numpy(), y_pred)
 	n_test_batches += 1
 
 print('Accuracy={}'.format(acc / n_test_batches))
-# Accuracy 82%

@@ -7,7 +7,6 @@ from torch import load
 
 model = Net()
 model.load_state_dict(load('ColorectalCancer.pt'))
-model.eval()
 test_datatset = TestDataset()
 test_loader = DataLoader(test_datatset, batch_size=64, shuffle=True)
 
@@ -20,6 +19,7 @@ for step, data in enumerate(test_loader):
 	n_batches += 1
 	y_pred = model.forward(test_x)
 	y_pred = np.argmax(y_pred.detach().numpy(), axis=1)
+	print(y_pred)
 	y_true = np.array(test_y)
 	batch_acc += accuracy_score(y_true=y_true, y_pred=y_pred)
 
