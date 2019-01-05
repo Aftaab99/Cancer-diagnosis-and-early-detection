@@ -7,6 +7,7 @@ from torch import Tensor
 from torch import save
 from torch.utils.data import DataLoader
 from sklearn.metrics import accuracy_score
+from torch.nn.functional import softmax
 
 model = Net()
 criterion = nn.CrossEntropyLoss()
@@ -15,7 +16,7 @@ optimizer = Adam(model.parameters())
 train_dataset = TrainDataset()
 train_data_loader = DataLoader(train_dataset, batch_size=64, shuffle=True)
 test_datatset = TestDataset()
-test_loader = DataLoader(test_datatset, batch_size=500, shuffle=True)
+test_loader = DataLoader(test_datatset, batch_size=64, shuffle=True)
 
 def checkpoint():
 	save(model.state_dict(), 'ColorectalCancer.pt')
@@ -28,7 +29,8 @@ def test():
 		test_x, test_y = data
 		test_x = test_x.type('torch.FloatTensor')
 		n_batches += 1
-		y_pred = model.forward(test_x)
+		y_pred = softmax(model.forward(test_x), dim=1)
+
 		y_pred = np.argmax(y_pred.detach().numpy(), axis=1)
 		y_true = np.array(test_y)
 		batch_acc += accuracy_score(y_true=y_true, y_pred=y_pred)
@@ -49,13 +51,13 @@ def train(epoch):
 		loss.backward()
 		optimizer.step()
 		if step == len(train_dataset) // 64:
-			print('Epoch {}, loss={}, acc={}'.format(epoch, epoch_loss/64, test()))
+			print('Epoch {}, loss={}, test acc={}'.format(epoch, epoch_loss/64, test()))
 		model.train()
 	return epoch_loss
 
 
 prev_epoch_loss = 1e20
-for epoch in range(1, 250):
+for epoch in range(1, 50):
 	epoch_loss = train(epoch)
 	if epoch_loss < prev_epoch_loss:
 		prev_epoch_loss = epoch_loss

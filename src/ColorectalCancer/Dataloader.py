@@ -1,85 +1,38 @@
-from PIL import Image
-from torch import Tensor
-import numpy as np
-from torch.utils.data import Dataset
 from sklearn.model_selection import train_test_split
-from glob import glob, fnmatch
+import pandas as pd
+from src.ColorectalCancer.Model import Net
+from torch.optim import Adam
+import torch.nn as nn
+from torch.utils.data import Dataset
 
-data = glob('/home/aftaab/MylanDatasets/colorectal-histology-mnist/Patches/*/*.tif')
-class1 = fnmatch.filter(data, '/home/aftaab/MylanDatasets/colorectal-histology-mnist/Patches/01_TUMOR/*.tif')
-class2 = fnmatch.filter(data, '/home/aftaab/MylanDatasets/colorectal-histology-mnist/Patches/02_STROMA/*.tif')
-class3 = fnmatch.filter(data, '/home/aftaab/MylanDatasets/colorectal-histology-mnist/Patches/03_COMPLEX/*.tif')
-class4 = fnmatch.filter(data, '/home/aftaab/MylanDatasets/colorectal-histology-mnist/Patches/04_LYMPHO/*.tif')
-class5 = fnmatch.filter(data, '/home/aftaab/MylanDatasets/colorectal-histology-mnist/Patches/05_DEBRIS/*.tif')
-class6 = fnmatch.filter(data, '/home/aftaab/MylanDatasets/colorectal-histology-mnist/Patches/06_MUCOSA/*.tif')
-class7 = fnmatch.filter(data, '/home/aftaab/MylanDatasets/colorectal-histology-mnist/Patches/07_ADIPOSE/*.tif')
-class0 = fnmatch.filter(data, '/home/aftaab/MylanDatasets/colorectal-histology-mnist/Patches/08_EMPTY/*.tif')
+
+data = pd.read_csv('/home/aftaab/MylanDatasets/colorectal-histology-mnist/hmnist_64_64_L.csv')
 train, test = train_test_split(data, test_size=0.1, shuffle=True)
+
+model = Net()
+criterion = nn.CrossEntropyLoss()
+optimizer = Adam(model.parameters())
+
+train_x = train.drop(['label'], axis=1).values.reshape(-1, 1, 64, 64)
+train_y = train['label'].values.reshape(-1, 1)
+
+test_x = test.drop(['label'], axis=1).values.reshape(-1, 1, 64, 64)
+test_y = test['label'].values.reshape(-1, 1)
 
 
 class TrainDataset(Dataset):
 
-	def __init__(self):
-		super().__init__()
-		self.train = train
-
 	def __getitem__(self, index):
-		img = Image.open(train[index]).convert('L')
-		img = img.resize([150, 150])
-		img = np.array(img).reshape(1, 150, 150)
-		if train[index] in class1:
-			y = 1
-		elif train[index] in class2:
-			y = 2
-		elif train[index] in class3:
-			y = 3
-		elif train[index] in class4:
-			y = 4
-		elif train[index] in class5:
-			y = 5
-		elif train[index] in class6:
-			y = 6
-		elif train[index] in class7:
-			y = 7
-		else:
-			y = 0
-
-		img = Tensor(img/255.0).view(1, 150, 150)
-		return img, y
+		return train_x[index]/255.0, train_y[index]-1
 
 	def __len__(self):
-		return len(train)
+		return test_x.shape[0]
 
 
 class TestDataset(Dataset):
 
-	def __init__(self):
-		super().__init__()
-		self.test = test
-
 	def __getitem__(self, index):
-		img = Image.open(train[index]).convert('L')
-		img = img.resize([150, 150])
-		img = np.array(img).reshape(1, 150, 150)
-		if test[index] in class1:
-			y = 1
-		elif test[index] in class2:
-			y = 2
-		elif test[index] in class3:
-			y = 3
-		elif test[index] in class4:
-			y = 4
-		elif test[index] in class5:
-			y = 5
-		elif test[index] in class6:
-			y = 6
-		elif test[index] in class7:
-			y = 7
-		else:
-			y = 0
-
-		img = Tensor(img/255.0).view(1, 150, 150)
-		return img, y
+		return test_x[index]/255.0, test_y[index]-1
 
 	def __len__(self):
-		return len(test)
+		return test_x.shape[0]
