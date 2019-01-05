@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request
-
+from flask_scss import Scss
 app = Flask(__name__)
 
+# Compiling SCSS to CSS files
+Scss(app, asset_dir='static/scss/', static_dir='static/css/')
 
 @app.route('/diagnosis/breast_cancer', methods=['GET', 'POST'])
 def breast_cancer_diagnosis():
@@ -14,7 +16,7 @@ def breast_cancer_diagnosis():
 @app.route('/prognosis/breast_cancer', methods=['GET', 'POST'])
 def breast_cancer_prognosis():
 	if request.method == 'GET':
-		return render_template('breast_cancer_prognosis.html')
+		return render_template('breast-cancer-prognosis.html')
 	else:
 		pass
 
@@ -22,7 +24,7 @@ def breast_cancer_prognosis():
 @app.route('/prognosis/cervical_cancer', methods=['GET', 'POST'])
 def cervical_cancer_prognosis():
 	if request.method == 'GET':
-		return render_template('cervical_cancer_prognosis.html')
+		return render_template('cervical-cancer-prognosis.html')
 	else:
 		pass
 
@@ -30,7 +32,7 @@ def cervical_cancer_prognosis():
 @app.route('/diagnosis/colorectal_cancer', methods=['GET', 'POST'])
 def colorectal_cancer():
 	if request.method == 'GET':
-		return render_template('colorectal_cancer_diagnosis.html')
+		return render_template('colorectal-cancer-diagnosis.html')
 	else:
 		pass
 
@@ -38,7 +40,7 @@ def colorectal_cancer():
 @app.route('/diagnosis/skin_cancer', methods=['GET', 'POST'])
 def skin_cancer():
 	if request.method == 'GET':
-		return render_template('skin_cancer.html')
+		return render_template('skin-cancer.html')
 	else:
 		pass
 
@@ -46,10 +48,13 @@ def skin_cancer():
 @app.route('/drug_discovery/protein_inhibitors', methods=['GET', 'POST'])
 def protein_inhibitors():
 	if request.method == 'GET':
-		return render_template('protein_inhibitor_discovery.html')
+		return render_template('protein-inhibitor-discovery.html')
 	else:
 		pass
 
+@app.route('/', methods=['GET'])
+def home():
+	return render_template('home.html')
 
 if __name__ == '__main__':
 	app.run()
