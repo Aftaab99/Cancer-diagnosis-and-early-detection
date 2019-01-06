@@ -1,4 +1,70 @@
+$spacer: 1rem;
+$spacers: ();
+// stylelint-disable-next-line scss/dollar-variable-default
+$spacers: map-merge(
+  (
+    0: 0,
+    1: (
+      $spacer * 0.25
+    ),
+    2: (
+      $spacer * 0.5
+    ),
+    3: $spacer,
+    4: (
+      $spacer * 1.5
+    ),
+    5: (
+      $spacer * 3
+    ),
+    6: (
+      $spacer * 9
+    )
+  ),
+  $spacers
+);
+
+$primary: white;
+$font-family-sans-serif: "Raleway", Roboto, "Arial", "sans-serif";
+
+@import "node_modules/bootstrap/scss/bootstrap";
+
+.navbar-custom,
+.dropdown-menu {
+  background-color: #283593;
+}
+/* change the brand and text color */
+.navbar-custom .navbar-brand,
+.navbar-custom .navbar-text {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* change the link color */
+.navbar-custom .navbar-nav .nav-link,
+.dropdown-item {
+  color: rgba(255, 255, 255, 0.75);
+}
+.dropdown-menu{
+    border: 0;
+}
+
 .dropdown:hover .dropdown-menu {
     display: block;
-    margin-top: 0; // remove the gap so it doesn't close
+    margin-top: 0; 
  }
+
+.dropdown-menu .dropdown-item:hover {
+  color: white;
+  background-color: #3949ab;
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+/* change the color of active or hovered links */
+.navbar-custom .nav-item.active .nav-link,
+.navbar-custom .nav-item:hover .nav-link {
+  color: #ffffff;
+}
+
