@@ -7148,7 +7148,7 @@ a.text-dark:hover, a.text-dark:focus {
 
 .navbar-custom,
 .dropdown-menu {
-  background-color: #283593; }
+  background-color: #ff5722; }
 
 /* change the brand and text color */
 .navbar-custom .navbar-brand,
@@ -7169,7 +7169,7 @@ a.text-dark:hover, a.text-dark:focus {
 
 .dropdown-menu .dropdown-item:hover {
   color: white;
-  background-color: #3949ab; }
+  background-color: #ff5722; }
 
 .dropdown-toggle::after {
   display: none; }
@@ -7178,3 +7178,19 @@ a.text-dark:hover, a.text-dark:focus {
 .navbar-custom .nav-item.active .nav-link,
 .navbar-custom .nav-item:hover .nav-link {
   color: #ffffff; }
+
+footer {
+  color: white;
+  background: #ff5722;
+  font-weight: 250; }
+
+footer > div > a {
+  font-weight: 500; }
+
+.btn-primary {
+  color: white;
+  background-color: #ff5722; }
+
+.btn-primary:hover, .btn-primary:active, .btn-primary:focus {
+  color: white;
+  background-color: #c41c00; }

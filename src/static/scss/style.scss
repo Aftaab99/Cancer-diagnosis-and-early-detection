@@ -26,13 +26,18 @@ $spacers: map-merge(
 
 $primary: white;
 $font-family-sans-serif: "Raleway", Roboto, "Arial", "sans-serif";
+$primary-theme-color: #ff5722;
+$primary-dark-theme-color: #c41c00;
+$primary-light-theme-color: #ff8a50;
 
 @import "node_modules/bootstrap/scss/bootstrap";
 
 .navbar-custom,
 .dropdown-menu {
-  background-color: #283593;
+  background-color: $primary-theme-color;
 }
+
+
 /* change the brand and text color */
 .navbar-custom .navbar-brand,
 .navbar-custom .navbar-text {
@@ -44,18 +49,18 @@ $font-family-sans-serif: "Raleway", Roboto, "Arial", "sans-serif";
 .dropdown-item {
   color: rgba(255, 255, 255, 0.75);
 }
-.dropdown-menu{
-    border: 0;
+.dropdown-menu {
+  border: 0;
 }
 
 .dropdown:hover .dropdown-menu {
-    display: block;
-    margin-top: 0; 
- }
+  display: block;
+  margin-top: 0;
+}
 
 .dropdown-menu .dropdown-item:hover {
   color: white;
-  background-color: #3949ab;
+  background-color: $primary-theme-color;
 }
 
 .dropdown-toggle::after {
@@ -66,5 +71,24 @@ $font-family-sans-serif: "Raleway", Roboto, "Arial", "sans-serif";
 .navbar-custom .nav-item.active .nav-link,
 .navbar-custom .nav-item:hover .nav-link {
   color: #ffffff;
+}
+
+footer {
+  color: white;
+  background: $primary-theme-color;
+  font-weight: 250;
+}
+footer > div > a {
+  font-weight: 500;
+}
+
+.btn-primary{
+  color: white;
+  background-color: $primary-theme-color;
+}
+
+.btn-primary:hover, .btn-primary:active, .btn-primary:focus{
+  color: white;
+  background-color: $primary-dark-theme-color;
 }
 
