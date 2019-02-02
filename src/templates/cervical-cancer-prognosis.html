@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Cancer Detection and Diagnosis</title>
+
+    <script src="{{ url_for('static', filename='js/jquery.min.js')}}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js')}}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='js/tether.min.js')}}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='js/custom.js')}}" type="text/javascript"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
+
+</head>
+
+<body>
+    {% include "navbar.html" %}
+    <div class="container mb-6 mt-5">
+        <h4 class="brdr">Cervical cancer prognosis</h4>
+        <p>Predicts likelihood of developing cervical cancer based on lifestyle habits. Used 4 linear Support vector machines
+            to replicate results of 4 medical tests for cervical cancer tests namely the Hinselmann test, Schiller test, Cervical cytology, and Biopsy.
+            Accuracies range from 85-90% on the test set for each model.
+        </p><br>
+
+        <form name="contentForm" enctype="multipart/form-data" method="post" action="/prognosis/breast_cancer" role="form"
+            data-toggle="validator" novalidate="true" class="needs-validation">
+            <div class="row">
+                <div class="form-group form-inline col-12 col-lg-6">
+                    <div class="container">
+                        <div class="row">
+                            <label class="col-12 col-sm-6" for="ta01">Current Age</label>
+                            <input type="number" name="age" step="1" min="1" class="form-control col-12 col-sm-6" id="ta01"
+                                placeholder="Your current age in years" value="" required="required" data-error="Please anter a valid number">
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group form-inline col-12 col-lg-6">
+                    <div class="container">
+                        <div class="row">
+                            <label class="col-12 col-sm-6" for="ta02">Number of sexual partners</label>
+                            <input type="number" name="no_sexual_partners" step="1" min="1" class="form-control col-12 col-sm-6"
+                                placeholder="No. of sexual partners" id="ta02" required="required" data-error="Please enter a valid number">
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group form-inline col-12 col-lg-6">
+                    <div class="container">
+                        <div class="row">
+                            <label class="col-12 col-sm-6" for="ta03">First sexual intercourse</label>
+                            <input type="number" step="1" min="1" name="first_sex_age" class="form-control col-12 col-sm-6"
+                                placeholder="Age then in years" id="ta03" required="required" data-error="Please enter a valid number">
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group form-inline col-12 col-lg-6">
+                    <div class="container">
+                        <div class="row">
+                            <label class="col-12 col-sm-6" for="ta04">Number of pregnancies</label>
+                            <input type="number" step="1" min="1" name="no_of_pregnancies" class="form-control col-12 col-sm-6"
+                                placeholder="Number of pregnancies" id="ta04" required="required" data-error="Please enter a valid number">
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group form-inline col-12 col-lg-6">
+                    <div class="container">
+                        <div class="row">
+                            <label class="col-12 col-sm-6" for="ta05">Number of STDs diagnosed</label>
+                            <input type="number" step="1" min="1" name="no_of_std" class="form-control col-12 col-sm-6"
+                                id="ta05" placeholder="No. of STDs diagnosed with" required="required" data-error="Please enter a valid number">
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group form-inline col-12 col-lg-6">
+                    <div class="container">
+                        <div class="row">
+                            <label class="col-12 col-sm-6" for="ta06">Diagnosed with CIN?</label>
+                            <input type="number" step="1" min="0" max="1" name="diagnosed_with_cin" class="form-control col-12 col-sm-6"
+                                id="ta06" placeholder="0 for no, 1 for yes" required="required" data-error="Please enter a valid number">
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group form-inline col-12 col-lg-6">
+                    <div class="container">
+                        <div class="row">
+                            <label class="col-12 col-sm-6" for="ta07">Diagnosed with HPV?</label>
+                            <input type="number" step="1" min="0" max="1" name="diagnosed_with_hpv" class="form-control col-12 col-sm-6"
+                                id="ta07" placeholder="0 for no, 1 for yes" required="required" data-error="Please enter a valid number">
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row mt-4">
+                <div class="col-12 text-center">
+                    <center>
+                        <button class="btn btn-primary" type="submit">Analyze</button>
+                    </center>
+                </div>
+            </div>
+        </form>
+
+    </div>
+    {% include "footer.html" %}
+</body>
+
+</html>
