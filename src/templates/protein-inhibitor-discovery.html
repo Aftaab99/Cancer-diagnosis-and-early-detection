@@ -10,17 +10,67 @@
     <script src="{{ url_for('static', filename='js/tether.min.js')}}" type="text/javascript"></script>
     <script src="{{ url_for('static', filename='js/custom.js')}}" type="text/javascript"></script>
 
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
     <!-- CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css')}}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
+    <link rel="stylesheet" href="/path/to/styles/default.css">
 
 </head>
 
 <body>
     {% include "navbar.html" %}
-        
+    <div class='container mt-5 mb-6'>
+        <div class="row">
+            <div class="col-12">
+                <p>
+                    <h4>Protein inhibitor classification</h4>
+                    A neural network was trained on a protein inhibitor fingerprint dataset that was able to classify
+                    whether a given drug can be used as a chemotherapy drug(protein inhibitor) or not using the drug's
+                    fingerprint data.
+                    If the drug is classified as positive, a second neural network predicts which among the 8 types of
+                    protein inhibitor classes present in the dataset the given drug belongs to.
+                </p>
+                <p><a
+                        href="https://medium.com/@stefan.schroedl/machine-learning-for-drug-discovery-in-a-nutshell-part-ii-24f90d5963d9">Drug
+                        fingerprint data</a> (a 2-D fingerprint in this case) is generally a high dimensional vector of
+                    1's and 0's. Algorithms like ECFP can represent the given molecule structure through a non-unique
+                    'hash'.
+
+                    Fingerprints for a given compound can be generated using the code provided on <a href="https://www.ebi.ac.uk/chembl/ws">Chembl</a>(the dataset
+                    used was a smaller version of Chembl consisting only of small molecules).
+                    <pre><code class="python">from chembl_webresource_client.utils import utils
+aspirin = utils.smiles2ctab('O=C(Oc1ccccc1C(=O)O)C')
+fingerprints = utils.sdf2fps(aspirin)</code></pre>
+                </p>
+            </div>
+        </div>
+        <div class="row mt-5 mb-5">
+            <div class="col-6">
+
+
+                <div class="form-group">
+                    <label>Upload your drug fingerprint vector(CSV)</label>
+                    <input id="breast-cancer-diagnosis-image" type="file" class="form-control-file" multiple=""
+                        accept=".csv">
+                </div>
+
+            </div>
+
+            <div class="col-6">
+                <form class="form-group">
+                    <label>Use a random sample from the dataset</label><br>
+                    <button class="btn btn-primary btn-md">Use available image</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     {% include "footer.html" %}
 </body>
 

@@ -9,10 +9,11 @@
     <script src="{{ url_for('static', filename='js/bootstrap.min.js')}}" type="text/javascript"></script>
     <script src="{{ url_for('static', filename='js/tether.min.js')}}" type="text/javascript"></script>
     <script src="{{ url_for('static', filename='js/custom.js')}}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='js/dynamic.js')}}" type="text/javascript"></script>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css')}}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/file-input.css')}}">
@@ -53,14 +54,15 @@
                 </form>
 
             </div>
-            <div class="col-12 col-md-6 mt-5 mt-md-0">
+            <div class="col-12 col-md-6 mt-5 mt-md-0 image-fluid">
                 <center>
-                    <img src="" width="400px" height="400px">
+                    <img src="{{ url_for('static', filename='assets/file-upload.svg')}}" id="image-box" width="100%">
                 </center>
             </div>
         </div>
     </div>
     {% include "footer.html" %}
+
 </body>
 
 </html>

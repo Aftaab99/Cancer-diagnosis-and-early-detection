@@ -3,9 +3,10 @@
   outline-offset: -10px;
   -webkit-transition: outline-offset 0.15s ease-in-out, background-color 0.15s linear;
   transition: outline-offset 0.15s ease-in-out, background-color 0.15s linear;
-  padding: 120px 0px 85px 35%;
-  text-align: center !important;
+  padding: 120px 0 120px 0;
   margin: 0;
+  text-align: center !important;
+  overflow: hidden;
   width: 100% !important;
 }
 .files input:focus {
@@ -53,3 +54,5 @@
   text-transform: capitalize;
   text-align: center;
 }
+
+

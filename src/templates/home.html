@@ -24,14 +24,14 @@
 
     {% include "navbar.html" %}
 
-    <div class="container mt-6">
+    <div class="container mt-lg-6 mt-5">
         <div class="row justify-content-center">
-            <div class="col-lg-4 col-12">
+            <div class="col-md-4 col-12">
                 <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
                     <div class="mainflip">
                         <div class="frontside">
                             <center>
-                                <div class="card" style="width: 18rem;">
+                                <div class="card">
                                     <img class="card-img-top" src="{{ url_for('static', filename='assets/prognosis.jpg')}}"
                                         alt="Card image cap">
                                     <div class="card-body">
@@ -42,7 +42,7 @@
                             </center>
                         </div>
                         <div class="backside">
-                            <div class="card" style="width:20rem;">
+                            <div class="card">
                                 <div class="card-header">
                                     Prognosis
                                 </div>
@@ -69,12 +69,12 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-12 mt-lg-0 mt-4">
+            <div class="col-md-4 col-12 mt-lg-0 mt-2">
                 <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
                     <div class="mainflip">
                         <div class="frontside">
                             <center>
-                                <div class="card" style="width: 18rem;">
+                                <div class="card">
                                     <img class="card-img-top" src="{{ url_for('static', filename='assets/diagnosis.jpg')}}"
                                         alt="Card image cap">
 
@@ -86,7 +86,7 @@
                             </center>
                         </div>
                         <div class="backside">
-                            <div class="card" style="width:20rem;">
+                            <div class="card">
                                 <div class="card-header">
                                     Diagnosis
                                 </div>
@@ -117,12 +117,12 @@
                 </div>
             </div>
 
-            <div class="col-lg-4 col-12 mt-lg-0 mt-4">
+            <div class="col-md-4 col-12 mt-lg-0 mt-2">
                 <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
                     <div class="mainflip">
                         <div class="frontside">
                             <center>
-                                <div class="card" style="width: 18rem;">
+                                <div class="card">
                                     <img class="card-img-top" src="{{ url_for('static', filename='assets/drug_discovery.png')}}"
                                         alt="Card image cap">
                                     <div class="card-body">
@@ -135,7 +135,7 @@
                             </center>
                         </div>
                         <div class="backside">
-                            <div class="card" style="width:20rem;">
+                            <div class="card">
                                 <div class="card-header">
                                     Drug discovery
                                 </div>
@@ -156,7 +156,7 @@
             </div>
         </div>
     </div>
-    {% include 'footer.html' %}
+    {% include "footer.html" %}
 </body>
 
 </html>

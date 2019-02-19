@@ -130,11 +130,11 @@ sup {
   top: -.5em; }
 
 a {
-  color: white;
+  color: #ff5722;
   text-decoration: none;
   background-color: transparent; }
   a:hover {
-    color: #d9d9d9;
+    color: #c41c00;
     text-decoration: underline; }
 
 a:not([href]):not([tabindex]) {
@@ -2047,9 +2047,9 @@ fieldset:disabled a.btn {
 
 .btn-link {
   font-weight: 400;
-  color: white; }
+  color: #ff5722; }
   .btn-link:hover {
-    color: #d9d9d9;
+    color: #c41c00;
     text-decoration: underline; }
   .btn-link:focus, .btn-link.focus {
     text-decoration: underline;
@@ -3421,12 +3421,12 @@ input[type="button"].btn-block {
   padding: 0.5rem 0.75rem;
   margin-left: -1px;
   line-height: 1.25;
-  color: white;
+  color: #ff5722;
   background-color: #fff;
   border: 1px solid #dee2e6; }
   .page-link:hover {
     z-index: 2;
-    color: #d9d9d9;
+    color: #c41c00;
     text-decoration: none;
     background-color: #e9ecef;
     border-color: #dee2e6; }
@@ -7182,7 +7182,8 @@ a.text-dark:hover, a.text-dark:focus {
 footer {
   color: white;
   background: #ff5722;
-  font-weight: 250; }
+  font-weight: 250;
+  bottom: 0; }
 
 footer > div > a {
   font-weight: 500; }
@@ -7191,6 +7192,8 @@ footer > div > a {
   color: white;
   background-color: #ff5722; }
 
-.btn-primary:hover, .btn-primary:active, .btn-primary:focus {
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:focus {
   color: white;
   background-color: #c41c00; }

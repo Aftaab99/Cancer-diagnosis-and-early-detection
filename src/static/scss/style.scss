@@ -29,14 +29,14 @@ $font-family-sans-serif: "Raleway", Roboto, "Arial", "sans-serif";
 $primary-theme-color: #ff5722;
 $primary-dark-theme-color: #c41c00;
 $primary-light-theme-color: #ff8a50;
-
+$link-color: $primary-theme-color;
+$link-hover-color: $primary-dark-theme-color;
 @import "node_modules/bootstrap/scss/bootstrap";
 
 .navbar-custom,
 .dropdown-menu {
   background-color: $primary-theme-color;
 }
-
 
 /* change the brand and text color */
 .navbar-custom .navbar-brand,
@@ -77,18 +77,21 @@ footer {
   color: white;
   background: $primary-theme-color;
   font-weight: 250;
+  bottom: 0;
 }
+
 footer > div > a {
   font-weight: 500;
 }
 
-.btn-primary{
+.btn-primary {
   color: white;
   background-color: $primary-theme-color;
 }
 
-.btn-primary:hover, .btn-primary:active, .btn-primary:focus{
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:focus {
   color: white;
   background-color: $primary-dark-theme-color;
 }
-
