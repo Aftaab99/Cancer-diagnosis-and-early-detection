@@ -1,6 +1,6 @@
 from torch.nn import BCELoss, CrossEntropyLoss
 from torch.optim import Adam
-from torch import Tensor, save
+from torch import save
 from src.CancerDrugTest.Dataloader import TrainDataset
 from torch.utils.data import DataLoader
 from src.CancerDrugTest.Model import MultiClassNet, BinaryNet
@@ -15,7 +15,7 @@ optim_bin = Adam(model_binary.parameters())
 
 # Multiclass model training
 train_dataset = TrainDataset('Multiclass')
-train_loader = DataLoader(train_dataset, batch_size=len(train_dataset))
+train_loader = DataLoader(train_dataset, batch_size=len(train_dataset), shuffle=True)
 
 N_epochs = 10000
 for batch_idx, data in enumerate(train_loader):

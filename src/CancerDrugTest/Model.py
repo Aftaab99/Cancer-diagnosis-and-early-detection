@@ -2,13 +2,15 @@ import torch.nn.functional as F
 from torch.nn import Module, Linear, Dropout
 import torch
 
+
 class MultiClassNet(Module):
+
 	def __init__(self):
 		super().__init__()
 		self.layer1 = Linear(80, 96)
 		self.dropout1 = Dropout(0.4)
 		self.layer2 = Linear(96, 64)
-		self.dropout2 = Dropout(0.2)
+		self.dropout2 = Dropout(0.3)
 		self.layer3 = Linear(64, 10)
 
 	def forward(self, x):

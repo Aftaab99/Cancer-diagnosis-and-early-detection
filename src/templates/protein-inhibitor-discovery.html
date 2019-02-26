@@ -8,9 +8,7 @@
     <script src="{{ url_for('static', filename='js/jquery.min.js')}}" type="text/javascript"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js')}}" type="text/javascript"></script>
     <script src="{{ url_for('static', filename='js/tether.min.js')}}" type="text/javascript"></script>
-    <script src="{{ url_for('static', filename='js/custom.js')}}" type="text/javascript"></script>
-
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css">
+    <script src="{{ url_for('static', filename='js/protein-inhibitor.js')}}" type="text/javascript"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
 
@@ -19,7 +17,7 @@
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css')}}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
-    <link rel="stylesheet" href="/path/to/styles/default.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css">
 
 </head>
 
@@ -42,7 +40,8 @@
                     1's and 0's. Algorithms like ECFP can represent the given molecule structure through a non-unique
                     'hash'.
 
-                    Fingerprints for a given compound can be generated using the code provided on <a href="https://www.ebi.ac.uk/chembl/ws">Chembl</a>(the dataset
+                    Fingerprints for a given compound can be generated using the code provided on <a
+                        href="https://www.ebi.ac.uk/chembl/ws">Chembl</a>(the dataset
                     used was a smaller version of Chembl consisting only of small molecules).
                     <pre><code class="python">from chembl_webresource_client.utils import utils
 aspirin = utils.smiles2ctab('O=C(Oc1ccccc1C(=O)O)C')
@@ -52,22 +51,45 @@ fingerprints = utils.sdf2fps(aspirin)</code></pre>
         </div>
         <div class="row mt-5 mb-5">
             <div class="col-6">
-
-
-                <div class="form-group">
-                    <label>Upload your drug fingerprint vector(CSV)</label>
-                    <input id="breast-cancer-diagnosis-image" type="file" class="form-control-file" multiple=""
-                        accept=".csv">
-                </div>
-
+                <form class="form-group" id="dd-form">
+                    <div class="row">
+                        <div class="col-12">
+                            <label for="#protein-fingerprint-csv">Upload your drug fingerprint vector(CSV)</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <input id="protein-fingerprint-csv" name="protein-fingerprint-csv" type="file" class="form-control-file" multiple=""
+                                accept=".csv">
+                        </div>
+                        <div class="col-6">
+                            <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-8">
+                            <div class="progress" id="progress-bar">
+                                <div class="progress-bar btn-primary" id="progress-bar-inner" role="progressbar" style="width: 0%" aria-valuenow="0"
+                                    aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
 
             <div class="col-6">
                 <form class="form-group">
                     <label>Use a random sample from the dataset</label><br>
-                    <button class="btn btn-primary btn-md">Use available image</button>
+                    <button class="btn btn-primary btn-md" id="use-random-btn">Use available fingerprint</button>
                 </form>
             </div>
+        </div>
+
+        <div class="row" id="result-heading">
+            <h5 class="col-12">Result</h5>
+        </div>
+        <div class="row" id="result-row">
+            <div class="text-success col-12" id="result">The molecule can be used as an inhibitor</div>
         </div>
     </div>
 
