@@ -9,6 +9,8 @@
     <script src="{{ url_for('static', filename='js/bootstrap.min.js')}}" type="text/javascript"></script>
     <script src="{{ url_for('static', filename='js/tether.min.js')}}" type="text/javascript"></script>
     <script src="{{ url_for('static', filename='js/dynamic.js')}}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='js/breast-cancer-diagnosis.js')}}" type="text/javascript"></script>
+
 
     <!-- CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -37,19 +39,28 @@
         </div>
         <div class="row mt-5 mb-5">
             <div class="col-12 col-md-6">
+                <form class="form-group" id="select-image-form" enctype="multipart/form-data">
+                    <label>Upload Your File</label>
+                    <div class="files">
+                        <input name="breast-cancer-diagnosis-image" id="breast-cancer-diagnosis-image"type="file" class="form-control" multiple=""
+                            accept="image/">
+                    </div>
+                    <div>
+                        <div class="progress" id="progress-bar">
+                            <div class="progress-bar btn-primary" id="progress-bar-inner" role="progressbar"
+                                style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-md mt-2" id="submit-button" type="submit">Submit</button>
+                </form>
 
-
-                <div class="form-group files">
-                    <label>Upload Your File </label>
-                    <input id="breast-cancer-diagnosis-image" type="file" class="form-control" multiple="">
-                </div>
                 <h6 class="text-center mt-3 mb-3">
                     --OR--
                 </h6>
-                <form class="form-group">
+                <form class="form-group" id="random-form">
                     <label>Use a random image from a high resolution images
                         available in the dataset</label>
-                    <button class="btn btn-primary btn-md">Use available image</button>
+                    <button class="btn btn-primary btn-md" type="submit">Use available image</button>
                 </form>
 
             </div>

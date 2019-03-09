@@ -2,9 +2,9 @@ from torch import nn
 from torch.nn.functional import relu
 import torch
 
-class Net(nn.Module):
+class BreastCancerModel(nn.Module):
 	def __init__(self):
-		super(Net, self).__init__()
+		super(BreastCancerModel, self).__init__()
 		self.conv1 = nn.Conv2d(3, 6, kernel_size=(5, 5))
 		self.pool1 = nn.MaxPool2d(kernel_size=(2, 2))
 		self.conv2 = nn.Conv2d(6, 16, kernel_size=(5, 5))

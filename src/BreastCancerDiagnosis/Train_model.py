@@ -1,7 +1,7 @@
 from torch.optim import Adam
 import numpy as np
 from torch.utils.data import DataLoader
-from src.BreastCancerDiagnosis.Model import Net
+from src.BreastCancerDiagnosis.Model import BreastCancerModel
 from src.BreastCancerDiagnosis.Dataloader import TrainDataset
 from torch import Tensor
 import torch.nn as nn
@@ -11,7 +11,7 @@ import time
 train_dataset = TrainDataset()
 train_loader = DataLoader(train_dataset, batch_size=32, num_workers=2, shuffle=True)
 
-model = Net()
+model = BreastCancerModel()
 criterion = nn.BCELoss()
 optim = Adam(model.parameters())
 
