@@ -8,6 +8,8 @@
     <script src="{{ url_for('static', filename='js/jquery.min.js')}}" type="text/javascript"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js')}}" type="text/javascript"></script>
     <script src="{{ url_for('static', filename='js/tether.min.js')}}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='js/form-validation.js')}}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='js/cervical-cancer-prognosis.js')}}" type="text/javascript"></script>
 
     <!-- CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -26,7 +28,7 @@
             Accuracies range from 85-90% on the test set for each model.
         </p><br>
 
-        <form name="contentForm" enctype="multipart/form-data" method="post" action="/prognosis/breast_cancer" role="form"
+        <form name="cervical-cancer-prognosis-form" enctype="multipart/form-data" method="post" action="/prognosis/breast_cancer" role="form"
             data-toggle="validator" novalidate="true" class="needs-validation">
             <div class="row">
                 <div class="form-group form-inline col-12 col-lg-6">
@@ -43,7 +45,7 @@
                     <div class="container">
                         <div class="row">
                             <label class="col-12 col-sm-6" for="ta02">Number of sexual partners</label>
-                            <input type="number" name="no_sexual_partners" step="1" min="1" class="form-control col-12 col-sm-6"
+                            <input type="number" name="no_sexual_partners" step="1" min="0" class="form-control col-12 col-sm-6"
                                 placeholder="No. of sexual partners" id="ta02" required="required" data-error="Please enter a valid number">
                             <div class="help-block with-errors"></div>
                         </div>
@@ -65,7 +67,7 @@
                     <div class="container">
                         <div class="row">
                             <label class="col-12 col-sm-6" for="ta04">Number of pregnancies</label>
-                            <input type="number" step="1" min="1" name="no_of_pregnancies" class="form-control col-12 col-sm-6"
+                            <input type="number" step="1" min="0" name="no_of_pregnancies" class="form-control col-12 col-sm-6"
                                 placeholder="Number of pregnancies" id="ta04" required="required" data-error="Please enter a valid number">
                             <div class="help-block with-errors"></div>
                         </div>
@@ -77,7 +79,7 @@
                     <div class="container">
                         <div class="row">
                             <label class="col-12 col-sm-6" for="ta05">Number of STDs diagnosed</label>
-                            <input type="number" step="1" min="1" name="no_of_std" class="form-control col-12 col-sm-6"
+                            <input type="number" step="1" min="0" name="no_of_std" class="form-control col-12 col-sm-6"
                                 id="ta05" placeholder="No. of STDs diagnosed with" required="required" data-error="Please enter a valid number">
                             <div class="help-block with-errors"></div>
                         </div>
@@ -115,6 +117,16 @@
                 </div>
             </div>
         </form>
+        <div class="row mt-4" id="result-heading">
+            <h5 class="col-12">Result</h5>
+        </div>
+        <div class="row" id="result-row">
+            <div class="text-success col-12" id="hins"></div>
+            <div class="text-success col-12" id="cit"></div>
+            <div class="text-success col-12" id="bio"></div>
+            <div class="text-success col-12" id="sch"></div>
+
+        </div>
 
     </div>
     {% include "footer.html" %}

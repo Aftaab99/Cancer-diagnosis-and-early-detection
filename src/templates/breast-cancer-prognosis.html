@@ -9,10 +9,11 @@
     <script src="{{ url_for('static', filename='js/bootstrap.min.js')}}" type="text/javascript"></script>
     <script src="{{ url_for('static', filename='js/tether.min.js')}}" type="text/javascript"></script>
     <script src="{{ url_for('static', filename='js/form-validation.js')}}" type="text/javascript"></script>
-    
+    <script src="{{ url_for('static', filename='js/breast-cancer-prognosis.js')}}" type="text/javascript"></script>
+
     <!-- CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css')}}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
 
@@ -26,15 +27,16 @@
             features computed using a digitised image of a Fine needle aspirate(FNA) of breast mass.
         </p><br>
 
-        <form name="contentForm" enctype="multipart/form-data" method="post" action="/prognosis/breast_cancer" role="form"
-            data-toggle="validator" novalidate="true" class="needs-validation">
+        <form name="breast-cancer-prognosis-form" enctype="multipart/form-data" method="post" action="/prognosis/breast_cancer"
+            role="form" data-toggle="validator" novalidate="true" class="needs-validation">
             <div class="row">
                 <div class="form-group form-inline col-12 col-lg-6">
                     <div class="container">
                         <div class="row">
                             <label class="col-12 col-sm-6" for="ta01">Clump Thickness</label>
-                            <input type="number" name="clump_thickness" step="1" min="0" max="10" class="form-control col-12 col-sm-6" id="ta01"
-                                placeholder="0-10" value="" required="required" data-error="Please anter a valid number">
+                            <input type="number" name="clump_thickness" step="1" min="0" max="10"
+                                class="form-control col-12 col-sm-6 bcpi" id="ta01" placeholder="0-10" value=""
+                                required="required" data-error="Please anter a valid number">
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
@@ -43,8 +45,9 @@
                     <div class="container">
                         <div class="row">
                             <label class="col-12 col-sm-6" for="ta02">Uniformity Cell Size</label>
-                            <input type="number" name="uniformity_cell_size" step="1" min="0" max="10" class="form-control col-12 col-sm-6"
-                                placeholder="0-10" id="ta02" required="required" data-error="Please enter a valid number">
+                            <input type="number" name="uniformity_cell_size" step="1" min="0" max="10"
+                                class="form-control col-12 col-sm-6 bcpi" placeholder="0-10" id="ta02" required="required"
+                                data-error="Please enter a valid number">
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
@@ -55,8 +58,9 @@
                     <div class="container">
                         <div class="row">
                             <label class="col-12 col-sm-6" for="ta03">Uniformity Cell Shape</label>
-                            <input type="number" step="1" min="0" max="10" name="uniformity_cell_shape" class="form-control col-12 col-sm-6"
-                                placeholder="0-10" id="ta03" required="required" data-error="Please enter a valid number">
+                            <input type="number" step="1" min="0" max="10" name="uniformity_cell_shape"
+                                class="form-control col-12 col-sm-6 bcpi" placeholder="0-10" id="ta03" required="required"
+                                data-error="Please enter a valid number">
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
@@ -65,8 +69,9 @@
                     <div class="container">
                         <div class="row">
                             <label class="col-12 col-sm-6" for="ta04">Marginal Adhesion</label>
-                            <input type="number" step="1" min="0" max="10" name="marginal_adhesion" class="form-control col-12 col-sm-6"
-                                placeholder="0-10" id="ta04" required="required" data-error="Please enter a valid number">
+                            <input type="number" step="1" min="0" max="10" name="marginal_adhesion"
+                                class="form-control col-12 col-sm-6 bcpi" placeholder="0-10" id="ta04" required="required"
+                                data-error="Please enter a valid number">
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
@@ -77,8 +82,9 @@
                     <div class="container">
                         <div class="row">
                             <label class="col-12 col-sm-6" for="ta05">Epithelial Cell Size</label>
-                            <input type="number" step="1" min="0" max="10" name="single_epithelial_cell_size" class="form-control col-12 col-sm-6"
-                                id="ta05" placeholder="0-10" required="required" data-error="Please enter a valid number">
+                            <input type="number" step="1" min="0" max="10" name="single_epithelial_cell_size"
+                                class="form-control col-12 col-sm-6 bcpi" id="ta05" placeholder="0-10" required="required"
+                                data-error="Please enter a valid number">
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
@@ -87,8 +93,9 @@
                     <div class="container">
                         <div class="row">
                             <label class="col-12 col-sm-6" for="ta06">Bare Nuclei</label>
-                            <input type="number" step="1" min="0" max="10" name="bare_nuclei" class="form-control col-12 col-sm-6" id="ta06"
-                                placeholder="0-10" required="required" data-error="Please enter a valid number">
+                            <input type="number" step="1" min="0" max="10" name="bare_nuclei"
+                                class="form-control col-12 col-sm-6 bcpi" id="ta06" placeholder="0-10" required="required"
+                                data-error="Please enter a valid number">
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
@@ -99,8 +106,9 @@
                     <div class="container">
                         <div class="row">
                             <label class="col-12 col-sm-6" for="ta07">Bland Chromatin</label>
-                            <input type="number" step="1" min="0" max="10" name="bland_chromatin" class="form-control col-12 col-sm-6" id="ta07"
-                                placeholder="0-10" required="required" data-error="Please enter a valid number">
+                            <input type="number" step="1" min="0" max="10" name="bland_chromatin"
+                                class="form-control col-12 col-sm-6 bcpi" id="ta07" placeholder="0-10" required="required"
+                                data-error="Please enter a valid number">
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
@@ -109,20 +117,22 @@
                     <div class="container">
                         <div class="row">
                             <label class="control-label col-12 col-sm-6" for="ta08">Normal Nucleoli</label>
-                            <input type="number" step="1" min="0" max="10" name="normal_nuclei" class="form-control col-12 col-sm-6" id="ta08"
-                                placeholder="0-10" required="required" data-error="Please enter a valid number">
+                            <input type="number" step="1" min="0" max="10" name="normal_nuclei"
+                                class="form-control col-12 col-sm-6 bcpi" id="ta08" placeholder="0-10" required="required"
+                                data-error="Please enter a valid number">
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="form-group form-inline col-12 col-lg-6"> 
+                <div class="form-group form-inline col-12 col-lg-6">
                     <div class="container">
                         <div class="row">
                             <label class="control-label col-12 col-sm-6" for="ta09">Mitosis</label>
-                            <input type="number" step="1" min="0" max="10" name="mitosis" class="form-control col-12 col-sm-6" id="ta09"
-                                placeholder="0-10" required="required" data-error="Please enter a valid number">
+                            <input type="number" step="1" min="0" max="10" name="mitosis"
+                                class="form-control col-12 col-sm-6 bcpi" id="ta09" placeholder="0-10" required="required"
+                                data-error="Please enter a valid number">
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
@@ -137,7 +147,12 @@
                 </div>
             </div>
         </form>
-        
+        <div class="row mt-4" id="result-heading">
+            <h5 class="col-12">Result</h5>
+        </div>
+        <div class="row" id="result-row">
+            <div class="text-success col-12" id="result"></div>
+        </div>
     </div>
     {% include "footer.html" %}
 </body>

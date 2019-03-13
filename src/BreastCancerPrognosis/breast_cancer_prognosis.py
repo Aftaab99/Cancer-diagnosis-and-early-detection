@@ -9,24 +9,10 @@ import pickle
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import f1_score
+from Model import BreastCancerPrognosisModel
 
 
-class Net(Module):
-
-	def __init__(self):
-		super().__init__()
-		self.layer_1 = Linear(9, 12)
-		self.layer_2 = Linear(12, 4)
-		self.layer_3 = Linear(4, 1)
-
-	def forward(self, x):
-		x = F.relu(self.layer_1(x))
-		x = F.relu(self.layer_2(x))
-		x = self.layer_3(x)
-		return F.sigmoid(x)
-
-
-model = Net()
+model = BreastCancerPrognosisModel()
 criterion = BCELoss()
 optimizer = Adam(model.parameters())
 
@@ -50,8 +36,12 @@ columns.remove('ID')
 
 # Scale the values between 0-1
 scaler = MinMaxScaler()
-raw_data = scaler.fit_transform(raw_data)
-
+y = raw_data['TARGET_CLASS']
+raw_data = scaler.fit_transform(raw_data.drop(['TARGET_CLASS'], axis=1))
+columns.remove('TARGET_CLASS')
+raw_data = pd.DataFrame(raw_data, columns=columns)
+raw_data = pd.concat([raw_data, y], axis=1)
+columns.append('TARGET_CLASS')
 train, test = train_test_split(raw_data, test_size=0.15)
 train = pd.DataFrame(data=train, columns=columns)
 test = pd.DataFrame(data=test, columns=columns)

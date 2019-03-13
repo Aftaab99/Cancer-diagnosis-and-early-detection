@@ -5,7 +5,7 @@ from torch import Tensor
 import torch
 
 
-class Net(nn.Module):
+class SkinCancerModel(nn.Module):
 
 	def __init__(self):
 		super().__init__()

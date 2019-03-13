@@ -1,4 +1,4 @@
-from src.SkinCancer.Model import Net
+from src.SkinCancer.Model import SkinCancerModel
 from src.SkinCancer.Dataloader import TrainDataset
 from torch import save
 import torch.nn as nn
@@ -6,7 +6,7 @@ import pandas as pd
 from torch.optim import Adam
 from torch.utils.data import DataLoader
 
-model = Net()
+model = SkinCancerModel()
 optimizer = Adam(model.parameters())
 criterion = nn.BCELoss()
 

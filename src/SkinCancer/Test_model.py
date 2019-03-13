@@ -1,11 +1,11 @@
 from src.SkinCancer.Dataloader import TestDataset
-from src.SkinCancer.Model import Net
+from src.SkinCancer.Model import SkinCancerModel
 from torch import load
 from torch.utils.data import DataLoader
 import numpy as np
 from sklearn.metrics import accuracy_score
 
-model = Net()
+model = SkinCancerModel()
 model.load_state_dict(load('model_skin_cancer_epoch40.pt'))
 model.eval()
 test_dataset = TestDataset()
