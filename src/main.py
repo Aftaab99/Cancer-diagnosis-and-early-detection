@@ -51,8 +51,8 @@ def breast_cancer_diagnosis():
 		model.eval()
 
 		if int(request.form.get('use_random')) == 1:
-			random_path = os.path.join('BreastCancerDiagnosis/RandomData',
-									   random.choice(os.listdir('BreastCancerDiagnosis/RandomData')))
+			random_path = os.path.join('BreastCancerDiagnosis/RandomData/images',
+									   random.choice(os.listdir('BreastCancerDiagnosis/RandomData/images')))
 			img = Image.open(random_path).convert('RGB').resize([400, 400])
 			img = sliding_window(model, img, 32)
 			return jsonify(serve_pil_image(img))
